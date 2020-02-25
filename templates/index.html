@@ -17,15 +17,13 @@
         <div class="container">
         <table class="table table-dark">
             <tr>
-                <th>Account</th>
-                <th>Last Checked</th>
                 <th>Screenshot</th>
+                <th>Last Checked</th>
             </tr>
-            {% for name, url, last_modified in data %}
+            {% for _, url, last_modified in data %}
             <tr>
-                <th>{{ name }}</th>
-                <th>{{ last_modified }}</th>
                 <th><img src="{{ url }}"></th>
+                <th>{{ last_modified }}</th>
             </tr>
             {% endfor %}
         </table>

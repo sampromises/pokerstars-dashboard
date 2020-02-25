@@ -1,14 +1,20 @@
-import boto3
-
 from collections import namedtuple
-from flask import Flask
-from flask import render_template
+
+from pytz import timezone
+
+import boto3
+from flask import Flask, render_template
 
 Cropped = namedtuple("Cropped", "name url last_modified")
 
 BUCKET_NAME = "pokerstars-90274"
 
 app = Flask(__name__)
+
+
+def _convert_timestamp(_datetime):
+    timezoned = _datetime.astimezone(timezone("US/Eastern"))
+    return timezoned.strftime("%m/%d/%Y, %H:%M:%S %Z")
 
 
 def _get_cropped():
@@ -27,10 +33,10 @@ def _get_cropped():
         )
         name = key.replace("cropped\\", "").replace(".png", "")
         last_modified = s3.get_object(Bucket=BUCKET_NAME, Key=key)["LastModified"]
-        print(last_modified)
+        last_modified = _convert_timestamp(last_modified)
         results.append(Cropped(name=name, url=url, last_modified=last_modified,))
 
-    return results
+    return sorted(results, key=lambda x: x.last_modified)
 
 
 @app.route("/")
