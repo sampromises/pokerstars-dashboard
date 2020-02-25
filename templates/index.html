@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,20 +11,16 @@
         <!-- Custom CSS -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     </head>
-    <body class="text-center dark">
+    <body class="dark">
         <div class="container">
-        <table class="table table-dark">
-            <tr>
-                <th>Screenshot</th>
-                <th>Last Checked</th>
-            </tr>
-            {% for _, url, last_updated, _ in data %}
-            <tr>
-                <th><img src="{{ url }}"></th>
-                <th>{{ last_updated }}</th>
-            </tr>
+            {% for name, url, last_updated, _ in data %}
+            <div class="row">
+                <figure class="figure mx-auto">
+                    <img src="{{ url }}" alt="{{ name }}" class="img-fluid mx-auto d-block">
+                    <figcaption class="figure-caption text-right">{{ last_updated }}</figcaption>
+                </figure>
+            </div>
             {% endfor %}
-        </table>
+        </div>
     </body>
 </html>
-
