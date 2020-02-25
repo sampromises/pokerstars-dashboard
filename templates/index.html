@@ -20,10 +20,10 @@
                 <th>Screenshot</th>
                 <th>Last Checked</th>
             </tr>
-            {% for _, url, last_modified in data %}
+            {% for _, url, last_updated, _ in data %}
             <tr>
                 <th><img src="{{ url }}"></th>
-                <th>{{ last_modified }}</th>
+                <th>{{ last_updated }}</th>
             </tr>
             {% endfor %}
         </table>
