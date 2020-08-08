@@ -17,7 +17,12 @@
             <div class="row">
                 <figure class="figure mx-auto">
                     <img src="{{ url }}" alt="{{ name }}" class="img-fluid mx-auto d-block">
-                    <figcaption class="figure-caption text-right">{{ last_updated }}</figcaption>
+                    <p class ="figure-caption" style="text-align:left;">
+                        {{ name }}
+                        <span style="float:right;">
+                            {{ last_updated }}
+                        </span>
+                    </p>
                 </figure>
             </div>
             {% endfor %}
