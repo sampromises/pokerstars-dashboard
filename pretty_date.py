@@ -1,6 +1,5 @@
-from pytz import timezone
-
 import pytz
+from pytz import timezone
 
 
 def pretty_date(time=False):
@@ -12,10 +11,11 @@ def pretty_date(time=False):
     Adapted from: https://stackoverflow.com/a/1551394
     """
     from datetime import datetime
+
     now = datetime.now(pytz.utc)
     if type(time) is int:
         diff = now - datetime.fromtimestamp(time)
-    elif isinstance(time,datetime):
+    elif isinstance(time, datetime):
         diff = now - time
     elif not time:
         diff = now - now
@@ -23,7 +23,7 @@ def pretty_date(time=False):
     day_diff = diff.days
 
     if day_diff < 0:
-        return ''
+        return ""
 
     if day_diff == 0:
         if second_diff < 10:
@@ -48,7 +48,6 @@ def pretty_date(time=False):
         return str(day_diff // 7) + " weeks ago"
     if day_diff < 365:
         return str(day_diff // 30) + " months ago"
-    if day_diff < 365*2:
+    if day_diff < 365 * 2:
         return str(day_diff // 365) + " year ago"
     return str(day_diff // 365) + " years ago"
-
