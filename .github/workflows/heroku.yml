@@ -1,0 +1,20 @@
+# This workflow will deploy the app to Heroku
+name: Heroku Deploy
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Deploy to Heroku
+      uses: AkhileshNS/heroku-deploy@v3.0.4
+      with:
+        heroku_api_key: ${{ secrets.HEROKU_API_TOKEN }}
+        heroku_email: samkim90274+heroku@gmail.com
+        heroku_app_name: pokerstars-dashboard
