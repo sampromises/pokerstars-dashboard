@@ -4,6 +4,9 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+black = "*"
+isort = "*"
+pre-commit = "*"
 
 [packages]
 boto3 = "==1.12.5"
@@ -27,3 +30,6 @@ werkzeug = "==1.0.0"
 
 [requires]
 python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true
