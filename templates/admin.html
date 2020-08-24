@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="col text-center">
+        <form method="POST">
+            <div class="form-group">
+                <textarea class="form-control" id="text-input" rows="15" name="user_input">{{ data }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

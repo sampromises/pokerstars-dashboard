@@ -1,7 +1,9 @@
+import json
+import os
 from collections import namedtuple
 
 import boto3
-from flask import Flask, render_template
+from flask import Flask, flash, redirect, render_template, request, url_for
 from pretty_date import pretty_date
 
 Screenshot = namedtuple("Screenshot", "name url last_updated timestamp")
@@ -9,6 +11,7 @@ Screenshot = namedtuple("Screenshot", "name url last_updated timestamp")
 BUCKET_NAME = "pokerstars-90274"
 
 app = Flask(__name__)
+app.config.update(SECRET_KEY=os.environ.get("FLASK_SECRET_KEY"))
 
 
 def pull_screenshots(key_prefix):
@@ -44,6 +47,34 @@ def _get_cropped():
 
 def _get_full():
     return pull_screenshots("full")
+
+
+def _get_login_json():
+    s3 = boto3.client("s3")
+    obj = s3.get_object(Bucket=BUCKET_NAME, Key="input.json")
+    return json.loads(obj["Body"].read())
+
+
+def _upload_login_json(data):
+    s3 = boto3.client("s3")
+    s3.put_object(
+        Body=data.encode("utf8"), Bucket=BUCKET_NAME, Key="input.json",
+    )
+
+
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+    data = _get_login_json()
+    if "user_input" in request.form:
+        user_data = request.form["user_input"]
+        try:
+            if json.loads(user_data) != data:
+                _upload_login_json(user_data)
+                flash("Successfully uploaded data.")
+        except json.JSONDecodeError:
+            flash("Input data is not valid JSON.")
+
+    return render_template("admin.html", data=json.dumps(data, indent=4))
 
 
 @app.route("/debug")
